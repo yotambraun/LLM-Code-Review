@@ -39,6 +39,11 @@ async def main(pr_number: int):
         return 1
 
 if __name__ == "__main__":
+    print("Debug Information:")
+    print(f"PR Number: {sys.argv[1]}")
+    print(f"Repository: {os.getenv('GITHUB_REPOSITORY')}")
+    print(f"Has GIT_TOKEN: {'Yes' if os.getenv('GIT_TOKEN') else 'No'}")
+    print(f"Has OPENAI_API_KEY: {'Yes' if os.getenv('OPENAI_API_KEY') else 'No'}")
     if len(sys.argv) != 2:
         print("Usage: python main.py <pr_number>")
         sys.exit(1)

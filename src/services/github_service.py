@@ -9,31 +9,38 @@ class GitHubService:
         self.repo = repo
         self.client = Github(token)
         self.logger = setup_logger('github_service')
-    
+        
     async def get_pr_files(self, pr_number: int) -> List[Dict[str, str]]:
         """Fetch files from a pull request"""
         try:
+            # Add debug logging
+            self.logger.info(f"Accessing repository: {self.repo}")
+            self.logger.info(f"Fetching PR #{pr_number}")
+            
+            # Verify token
+            if not self.token:
+                raise ValueError("GitHub token is not set")
+                
             repo = self.client.get_repo(self.repo)
             pr = repo.get_pull(pr_number)
-            files = []
             
-            async with aiohttp.ClientSession() as session:
-                for file in pr.get_files():
-                    if file.status != 'removed':
-                        content = await self._fetch_file_content(
-                            session, file.raw_url
-                        )
-                        files.append({
-                            'filename': file.filename,
-                            'content': content,
-                            'status': file.status,
-                            'additions': file.additions,
-                            'deletions': file.deletions
-                        })
+            files = []
+            for file in pr.get_files():
+                if file.status != 'removed':
+                    content = await self._fetch_file_content(file.raw_url)
+                    files.append({
+                        'filename': file.filename,
+                        'content': content,
+                        'status': file.status
+                    })
+            
+            self.logger.info(f"Successfully fetched {len(files)} files")
             return files
             
         except Exception as e:
             self.logger.error(f"Error fetching PR files: {str(e)}")
+            self.logger.error(f"Repository: {self.repo}")
+            self.logger.error(f"PR Number: {pr_number}")
             raise
     
     async def _fetch_file_content(
