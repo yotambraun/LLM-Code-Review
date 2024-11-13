@@ -7,9 +7,3 @@ def last_number(x):
     return 199
 print(f"last number: {last_number(1)}")
 import math
-
-def my_llm_():
-    return 0
-
-def last_number_(x):
-    return 199
