@@ -16,6 +16,7 @@ async def validate_environment() -> Optional[str]:
     Validate all required environment variables and credentials
     Returns error message if validation fails, None if successful
     """
+    # Check required environment variables
     required_vars = {
         'GIT_TOKEN': os.getenv('GIT_TOKEN'),
         'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY'),
@@ -26,10 +27,13 @@ async def validate_environment() -> Optional[str]:
     if missing_vars:
         return f"Missing required environment variables: {', '.join(missing_vars)}"
     
+    # Validate GitHub token by checking repository access instead of user access
     try:
         github = Github(required_vars['GIT_TOKEN'])
-        user = github.get_user()
-        logger.info(f"Authenticated as GitHub user: {user.login}")
+        repo = github.get_repo(required_vars['GITHUB_REPOSITORY'])
+        # Just check if we can access basic repo info
+        _ = repo.full_name
+        logger.info(f"Successfully validated GitHub token for repository: {repo.full_name}")
     except Exception as e:
         return f"GitHub token validation failed: {str(e)}"
     
