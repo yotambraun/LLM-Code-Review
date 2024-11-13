@@ -4,13 +4,14 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-# Updated permissions block
+# Correct permissions block
 permissions:
   contents: read
   pull-requests: write
   issues: write
-  metadata: read    # Add this for repository metadata access
-  statuses: write   # Add this for status updates
+  statuses: write
+  checks: write     # Add this for check runs
+  id-token: write   # Add this for token authentication
 
 jobs:
   review:
@@ -31,9 +32,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
+      - name: Debug Token
+        run: |
+          echo "Running with token starting with: ${GIT_TOKEN:0:4}..."
+          echo "Repository: ${{ github.repository }}"
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+        env:
+          GIT_TOKEN: ${{ github.token }}
+      
       - name: Run code review
         env:
-          # Use GITHUB_TOKEN differently
           GIT_TOKEN: ${{ github.token }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_REPOSITORY: ${{ github.repository }}
