@@ -2,7 +2,7 @@
 
 > Transform your code review process with AI-powered insights
 
-![GitHub Action LLM Review](github_action_llm_review.png)
+![GitHub Action LLM Review](images/github_action_llm_review.png)
 
 LLM-Code-Review revolutionizes your pull request workflow by providing intelligent, automated code reviews using GPT-4. Get instant feedback on code quality, security, and best practices.
 
@@ -17,10 +17,10 @@ LLM-Code-Review revolutionizes your pull request workflow by providing intellige
 ## 📸 In Action
 
 ### Automated Review Summary
-![Auto LLM Review Summary](auto_llm_review_summary_pull_request.png)
+![Auto LLM Review Summary](images/auto_llm_review_summary_pull_request.png)
 
 ### Detailed Recommendations
-![Overall Recommendations](github_action_llm_review.png)
+![Overall Recommendations](images/github_action_llm_review.png)
 
 ## 🚀 Quick Setup
 
