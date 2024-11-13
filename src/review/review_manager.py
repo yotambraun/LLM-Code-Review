@@ -2,7 +2,7 @@ from typing import List, Dict
 import asyncio
 from datetime import datetime
 from src.services.github_service import GitHubService
-from src.services.ai_service import AIService
+from src.services.openai_service import OpenAIService
 from src.utils.logger import setup_logger
 from src.config.settings import ReviewSettings
 
@@ -10,7 +10,7 @@ class ReviewManager:
     def __init__(
         self,
         github_service: GitHubService,
-        ai_service: AIService,
+        ai_service: OpenAIService,
         settings: ReviewSettings
     ):
         self.github = github_service
