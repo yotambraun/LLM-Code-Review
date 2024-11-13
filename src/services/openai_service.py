@@ -55,7 +55,7 @@ class OPENAIService:
                 {"role": "system", "content": "You are an expert code reviewer"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.1,
+            temperature=0.2,
             timeout=self.timeout
         )
     
