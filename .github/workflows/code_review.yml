@@ -3,10 +3,13 @@ name: LLM Code Review
 on:
   pull_request:
     types: [opened, synchronize]
-    
+
+# Explicitly declare token permissions
 permissions:
   contents: read
   pull-requests: write
+  issues: write      # Add this if you're commenting on PRs
+  actions: read      # Add this for workflow access
 
 jobs:
   review:
@@ -15,7 +18,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Explicitly use token for checkout
+          
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -27,9 +32,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
+      - name: Debug Token
+        run: |
+          echo "Token starts with: ${GIT_TOKEN:0:4}..."
+          echo "Repository: ${{ github.repository }}"
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+        env:
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Run code review
         env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GIT_TOKEN: ${{ github.token }}  # Use github.token instead of secrets.GITHUB_TOKEN
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
