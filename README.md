@@ -20,7 +20,7 @@ LLM-Code-Review revolutionizes your pull request workflow by providing intellige
 ![Auto LLM Review Summary](images/auto_llm_review_summary_pull_request.png)
 
 ### Detailed Recommendations
-![Overall Recommendations](images/github_action_llm_review.png)
+![Overall Recommendations](images/overall_recommendations.png)
 
 ## 🚀 Quick Setup
 
