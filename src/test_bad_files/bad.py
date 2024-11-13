@@ -11,5 +11,7 @@ import math
 def my_llm_():
     return 0
 
+print(f"last number: {last_number(1)}")
+
 def last_number_(x):
     return 199
